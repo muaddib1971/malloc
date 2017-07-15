@@ -58,6 +58,7 @@ void intlist_fill(struct int_list* list){
                 if(!intlist_add(list, random)){
                         exit(EXIT_FAILURE);
                 }
+                printf("added %d items\n", count+1);
         }
 }
 

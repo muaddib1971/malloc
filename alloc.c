@@ -10,8 +10,9 @@ struct block_pair find_block(struct page_list * pagelist, size_t size)
         struct block_pair result;
         memset(&result, 0, sizeof(struct block_pair));
         while(curr_page){
-                if(pagelist->pagesize - sizeof(struct page) -
-                   curr_page->bytes_used > size)
+                size_t space_left = (pagelist->pagesize - sizeof(struct page))
+                        - curr_page->bytes_used;
+                if(space_left > size + sizeof(struct alloc))
                 {
                         result.page = curr_page;
                         result.address = curr_page->data+curr_page->bytes_used;
