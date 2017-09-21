@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "malloc.h"
 
-#define NUM_INTS 1000000000
+#define NUM_INTS 1<<16
 
 #ifndef INTLIST
 #define INTLIST

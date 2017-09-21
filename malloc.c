@@ -3,7 +3,8 @@
 
 static struct page_list page_list;
 
-void * memory_alloc(size_t size){
+void * memory_alloc(size_t size)
+{
         struct block_pair alloc = find_block(&page_list, size);
         if(INVALID_BLOCK(alloc)){
                 struct page * newpage = new_page(page_list.pagesize);
@@ -21,6 +22,51 @@ void * memory_alloc(size_t size){
         add_page(&page_list, alloc.page);
         return ((char*)alloc.address)+sizeof(struct alloc);
 }
+
+void * simple_malloc(size_t size)
+{
+    void * chunk = simple_alloc(size);
+    if(!chunk)
+    {
+	perror("failed to allocate memory");
+	return NULL;
+	
+    }
+    return chunk;
+    
+    
+}
+
+
+void * lazy_malloc(size_t size)
+{
+    void * current = sbrk(0);
+    void * new = sbrk(size);
+    if(new == (void*) -1)
+    {
+	perror("sbreak failed");
+	return NULL;
+	
+    }
+    assert(current == new);
+    return new;
+    
+    
+}
+
+void lazy_free(void * mem)
+{
+    (void) mem;
+    
+}
+
+void simple_free(void * mem)
+{
+    simple_dealloc(mem);
+    
+}
+
+
 
 void memory_free(void * loc){
         /* we need to validate that this block was allocated by us and if so 

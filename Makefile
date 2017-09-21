@@ -2,7 +2,7 @@ SOURCES=alloc.c malloc.c page.c intlist.c
 OBJECTS=alloc.o malloc.o page.o intlist.o
 HEADERS=alloc.h malloc.h page.h intlist.h
 CC=gcc
-CFLAGS=-Wall -pedantic -Wextra -Werror -fdiagnostics-color=always -g
+CFLAGS=-Wall -pedantic -Wextra -Werror -g -fdiagnostics-color=always
 LDFLAGS=
 
 all: tags strmalloc intlist
@@ -16,12 +16,15 @@ strmalloc:$(OBJECTS) strmalloc.o
 %.o:%.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $<
 
+debug:CFLAGS+=-g -DDEBUG
+debug:clean all
+
 tags:
 	ctags $(SOURCES) $(HEADERS)
 
-sanitize:CFLAGS+=-fsanitize=address
+sanitize:CFLAGS+=-fsanitize=address -g -DDEBUG
 sanitize:LDFLAGS+=-fsanitize=address
 sanitize:clean all
 
 clean:
-	rm -f *.o *~ malloc_test \#* tags
+	rm -f *.o *~ strmalloc intlist \#* tags
