@@ -29,9 +29,10 @@ void add_page(struct page_list * list, struct page * page){
         while(current->next && current->bytes_used < page->bytes_used){
                 current = current->next;
         }
-        if(!current->next){
-                current->next = page;
-                page->prev = current;
+        if(!current->prev){
+                page->next = list->head;
+                list->head->prev = page;
+                page->prev = NULL;
         }
         else{
                 page->next = current->next;
