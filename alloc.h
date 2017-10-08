@@ -6,8 +6,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#pragma pack(1)
-
 #ifndef ALLOC_H
 #define ALLOC_H
 struct alloc
@@ -18,17 +16,13 @@ struct alloc
         struct alloc * prev;
 };
 
-
 struct simple_alloc
 {
-    void * address;
     size_t num_bytes;
     struct simple_alloc * prev;
     struct simple_alloc * next;
     char data[];
 };
-
-
 
 struct block_pair
 {

@@ -6,7 +6,7 @@ void intlist_init(struct int_list* list){
 }
 
 bool intlist_add(struct int_list* list, int data){
-    struct int_node * new = simple_malloc(sizeof(struct int_node));
+    struct int_node * new = MALLOC(sizeof(struct int_node));
     struct int_node * current, *prev=NULL;
     if(!new)
     {
@@ -29,7 +29,8 @@ bool intlist_add(struct int_list* list, int data){
         new->next = list->head;
         list->head = new;
     }
-    else{
+    else
+    {
         assert(prev);
         new->next = current;
         prev->next = new;
@@ -38,29 +39,39 @@ bool intlist_add(struct int_list* list, int data){
     return true;
 }
 
-void intlist_free(struct int_list* list){
+void intlist_free(struct int_list* list)
+{
     struct int_node * current, * next;
 
     current = list->head;
     while(current){
         next = current;
         current = current->next;
-        simple_free(next);
+        FREE(next);
     }
 }
 
-void intlist_fill(struct int_list* list){
+void intlist_fill(struct int_list* list)
+{
     srand(time(NULL));
     int count;
-    for(count = 0; count < NUM_INTS; ++count){
+    printf("allocating %d ints\n", NUM_INTS);
+    for(count = 0; count < NUM_INTS; ++count)
+    {
         int random = rand();
-        if(!intlist_add(list, random)){
+        if(count > 0 && count % 100000 == 0)
+        {
+            printf("allocated %d ints\n", count);
+        }
+        if(!intlist_add(list, random))
+        {
             exit(EXIT_FAILURE);
-
         }
 #ifdef DEBUG
-        fprintf(stderr, "number of ints allocated: %d\n", 
-                count + 1);
+        {
+            fprintf(stderr, "number of ints allocated: %d\n", 
+                    count + 1);
+        }
 #endif
     }
 }

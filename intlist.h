@@ -7,6 +7,15 @@
 
 #ifndef INTLIST
 #define INTLIST
+
+#ifdef LAZY_ALLOC
+#define MALLOC lazy_malloc
+#define FREE lazy_free
+#elif defined(SIMPLE_ALLOC)
+#define MALLOC simple_malloc
+#define FREE simple_free
+#endif
+
 struct int_node{
         int data;
         struct int_node * next;
