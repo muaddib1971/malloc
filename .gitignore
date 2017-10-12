@@ -55,3 +55,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+vgcore.*
+intlist_lazy
+intlist_simple

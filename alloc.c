@@ -22,6 +22,7 @@ static struct simple_alloc * simple_allocs_tail = NULL;
 static struct simple_alloc * simple_frees_head = NULL;
 static struct simple_alloc * simple_frees_tail = NULL;
 
+/* store the current heap frontier */
 static void * frontier = NULL;
 
 struct block_pair find_block(struct page_list * pagelist, size_t size)

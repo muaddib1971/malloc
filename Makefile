@@ -37,4 +37,4 @@ clean_objects:
 
 .PHONY:clean
 clean: clean_objects
-	rm -f  *~ strmalloc intlist \#* tags
+	rm -f  *~  \#* tags intlist_lazy intlist_simple
